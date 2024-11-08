@@ -22,8 +22,9 @@ def openRandomImageFromPathList(imagePathList: List[os.PathLike],
         seed = seed
         random.seed(seed)
 
-    randomImage = Image.open(random.choice(imagePathList))
-    randomImageLabel = random.choice(imagePathList).parent.stem
+    randomImagePath = random.choice(imagePathList)
+    randomImage = Image.open(randomImagePath)
+    randomImageLabel = randomImagePath.parent.stem
 
     print(f"The class label of the image: {randomImageLabel}")
     print(f"The colour mode of the image: {randomImage.mode}")
@@ -32,3 +33,16 @@ def openRandomImageFromPathList(imagePathList: List[os.PathLike],
     print(f"The width of the image: {randomImage.width}\n")
 
     return randomImage
+
+def set_seeds(seed: int = 42):
+    """Sets random seed for PyTorch operations. Requires torch library.
+    
+    Args:
+        seed (int, optional): Random seed to set. Defaults 42 (the meaning of life).
+    """
+    # Set the seed for general PyTorch operations
+    torch.manual_seed(seed)
+
+    # Set the seed for GPU operations
+    torch.cuda.manual_seed(seed)
+
